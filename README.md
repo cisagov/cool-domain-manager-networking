@@ -22,7 +22,11 @@
     [`cisagov/cool-accounts/terraform`](https://github.com/cisagov/cool-accounts/terraform)
   - Users:
     [`cisagov/cool-accounts/users`](https://github.com/cisagov/cool-accounts/users)
-- Terraform in [`cisagov/cool-dns-cyber.dhs.gov`](https://github.com/cisagov/cool-dns-cyber.dhs.gov)
+- Terraform in
+  [`cisagov/cool-dns-cyber.dhs.gov`](https://github.com/cisagov/cool-dns-cyber.dhs.gov)
+  must have been applied.
+- Terraform in
+  [`cisagov/cool-sharedservices-networking`](https://github.com/cisagov/cool-sharedservices-networking)
   must have been applied.
 - A Terraform [variables](variables.tf) file customized for your
   environment, for example:
