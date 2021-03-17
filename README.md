@@ -2,38 +2,71 @@
 
 [![GitHub Build Status](https://github.com/cisagov/cool-domain-manager-networking/workflows/build/badge.svg)](https://github.com/cisagov/cool-domain-manager-networking/actions)
 
-This is a generic skeleton project that can be used to quickly get a
-new [cisagov](https://github.com/cisagov) [Terraform
-module](https://www.terraform.io/docs/modules/index.html) GitHub
-repository started.  This skeleton project contains [licensing
-information](LICENSE), as well as [pre-commit
-hooks](https://pre-commit.com) and
-[GitHub Actions](https://github.com/features/actions) configurations
-appropriate for the major languages that we use.
+## Pre-requisites ##
 
-See [here](https://www.terraform.io/docs/modules/index.html) for more
-details on Terraform modules and the standard module structure.
+- [Terraform](https://www.terraform.io/) installed on your system.
+- An accessible AWS S3 bucket to store Terraform state
+  (specified in [`backend.tf`](backend.tf)).
+- An accessible AWS DynamoDB database to store the Terraform state lock
+  (specified in [`backend.tf`](backend.tf)).
+- Access to all of the Terraform remote states specified in
+  [`remote_states.tf`](remote_states.tf).
+- The following COOL accounts and roles must have been created:
+  - Domain Manager:
+    [`cisagov/cool-accounts-domain-manager`](https://github.com/cisagov/cool-accounts-domain-manager)
+  - Master:
+    [`cisagov/cool-accounts/master`](https://github.com/cisagov/cool-accounts/master)
+  - Shared Services:
+    [`cisagov/cool-accounts/sharedservices`](https://github.com/cisagov/cool-accounts/sharedservices)
+  - Terraform:
+    [`cisagov/cool-accounts/terraform`](https://github.com/cisagov/cool-accounts/terraform)
+  - Users:
+    [`cisagov/cool-accounts/users`](https://github.com/cisagov/cool-accounts/users)
+- Terraform in
+  [`cisagov/cool-dns-cyber.dhs.gov`](https://github.com/cisagov/cool-dns-cyber.dhs.gov)
+  must have been applied.
+- Terraform in
+  [`cisagov/cool-sharedservices-networking`](https://github.com/cisagov/cool-sharedservices-networking)
+  must have been applied.
+- A Terraform [variables](variables.tf) file customized for your
+  environment, for example:
 
-## Usage ##
+  ```hcl
+  cool_cidr_block = "10.128.0.0/9"
+  private_subnet_cidr_blocks = [
+    "10.10.2.0/24",
+    "10.10.3.0/24",
+  ]
+  public_subnet_cidr_blocks = [
+    "10.10.0.0/24",
+    "10.10.1.0/24",
+  ]
+  vpc_cidr_block = "10.10.0.0/21"
+  ```
 
-```hcl
-module "example" {
-  source = "github.com/cisagov/cool-domain-manager-networking"
+## Building the Terraform-based infrastructure ##
 
-  aws_region            = "us-west-1"
-  aws_availability_zone = "b"
-  subnet_id             = "subnet-0123456789abcdef0"
+1. Create a Terraform workspace (if you haven't already done so) for
+   your assessment by running `terraform workspace new <workspace_name>`.
 
-  tags = {
-    Key1 = "Value1"
-    Key2 = "Value2"
-  }
-}
-```
+   **IMPORTANT:** The Terraform workspace name must be the same as an
+   existing Terraform workspace for your deployment of
+   [`cisagov/cool-accounts-domain-manager`](https://github.com/cisagov/cool-accounts-domain-manager)
+   (e.g. `staging`, `production`, etc.) or your deployment will fail.
+1. Create a `<workspace_name>.tfvars` file with all of the required
+   variables (see [Inputs](#Inputs) below for details).
+1. Run the command `terraform init`.
+1. Add all necessary permissions by running the command:
 
-## Examples ##
+   ```console
+   terraform apply -var-file=<workspace_name>.tfvars --target=aws_iam_policy.provisionnetworking_policy --target=aws_iam_role_policy_attachment.provisionnetworking_policy_attachment
+   ```
 
-* [Deploying into the default VPC](https://github.com/cisagov/cool-domain-manager-networking/tree/develop/examples/default_vpc)
+1. Create all remaining Terraform infrastructure by running the command:
+
+   ```console
+   terraform apply -var-file=<workspace_name>.tfvars
+   ```
 
 ## Requirements ##
 
@@ -47,39 +80,43 @@ module "example" {
 | Name | Version |
 |------|---------|
 | aws | ~> 3.0 |
+| aws.dns_cyber_dhs_gov | ~> 3.0 |
+| aws.domainmanager_provisionaccount | ~> 3.0 |
+| aws.organizationsreadonly | ~> 3.0 |
+| aws.provisionsharedservices | ~> 3.0 |
+| null | n/a |
+| terraform | n/a |
 
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| ami_owner_account_id | The ID of the AWS account that owns the Example AMI, or "self" if the AMI is owned by the same account as the provisioner. | `string` | `self` | no |
-| aws_availability_zone | The AWS availability zone to deploy into (e.g. a, b, c, etc.) | `string` | `a` | no |
 | aws_region | The AWS region to deploy into (e.g. us-east-1) | `string` | `us-east-1` | no |
-| subnet_id | The ID of the AWS subnet to deploy into (e.g. subnet-0123456789abcdef0) | `string` | n/a | yes |
+| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
+| domainmanager_subdomain | The subdomain for Domain Manager (e.g. "domain-manager.cool"). | `string` | n/a | yes |
+| private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as public_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Domain Manager account. | `string` | `Allows provisioning of the networking layer in the Domain Manager account.` | no |
+| provisionnetworking_policy_name | The name to assign the IAM policy that allows provisioning of the networking layer in the Domain Manager account. | `string` | `ProvisionNetworking` | no |
+| public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| read_terraform_state_role_name | The name to assign the IAM role and policy that allows read-only access to the cool-domain-manager-networking state in the S3 bucket where Terraform state is stored. | `string` | `ReadDomainManagerNetworkingTerraformState` | no |
 | tags | Tags to apply to all AWS resources created | `map(string)` | `{}` | no |
+| vpc_cidr_block | The CIDR block to use for the Domain Manager VPC (e.g. "10.10.0.0/21"). | `string` | n/a | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| arn | The EC2 instance ARN |
-| availability_zone | The AZ where the EC2 instance is deployed |
-| id | The EC2 instance ID |
-| private_ip | The private IP of the EC2 instance |
-| subnet_id | The ID of the subnet where the EC2 instance is deployed |
+| domainmanager_certificate | The ACM certificate for Domain Manager. |
+| private_subnet_nat_gws | The NAT gateways used in the private subnets in the Domain Manager VPC. |
+| private_subnets | The private subnets in the Domain Manager VPC. |
+| public_subnets | The public subnets in the Domain Manager VPC. |
+| read_terraform_state | The IAM policies and role that allow read-only access to the Terraform state for Domain Manager networking. |
+| vpc | The Domain Manager VPC. |
 
 ## Notes ##
 
 Running `pre-commit` requires running `terraform init` in every directory that
-contains Terraform code. In this repository, these are the main directory and
-every directory under `examples/`.
-
-## New Repositories from a Skeleton ##
-
-Please see our [Project Setup guide](https://github.com/cisagov/development-guide/tree/develop/project_setup)
-for step-by-step instructions on how to start a new repository from
-a skeleton. This will save you time and effort when configuring a
-new repository!
+contains Terraform code. In this repository, this is just the main directory.
 
 ## Contributing ##
 
