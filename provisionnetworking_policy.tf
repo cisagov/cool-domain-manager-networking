@@ -13,6 +13,7 @@ data "aws_iam_policy_document" "provisionnetworking_policy_doc" {
       "acm:ListCertificates",
       "acm:ListTagsForCertificate",
       "acm:RemoveTagsFromCertificate",
+      "acm:RequestCertificate",
       "acm:UpdateCertificateOptions",
       "ec2:AllocateAddress",
       "ec2:AssociateRouteTable",
