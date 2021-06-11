@@ -73,44 +73,91 @@
 | Name | Version |
 |------|---------|
 | terraform | ~> 0.12.0 |
-| aws | ~> 3.0 |
+| aws | ~> 3.38 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | ~> 3.0 |
-| aws.dns_cyber_dhs_gov | ~> 3.0 |
-| aws.domainmanager_provisionaccount | ~> 3.0 |
-| aws.organizationsreadonly | ~> 3.0 |
-| aws.provisionsharedservices | ~> 3.0 |
+| aws | ~> 3.38 |
+| aws.dns\_cyber\_dhs\_gov | ~> 3.38 |
+| aws.domainmanager\_provisionaccount | ~> 3.38 |
+| aws.organizationsreadonly | ~> 3.38 |
+| aws.provisionsharedservices | ~> 3.38 |
 | null | n/a |
 | terraform | n/a |
+
+## Modules ##
+
+| Name | Source | Version |
+|------|--------|---------|
+| private | github.com/cisagov/distributed-subnets-tf-module | n/a |
+| public | github.com/cisagov/distributed-subnets-tf-module | n/a |
+| read\_terraform\_state | github.com/cisagov/terraform-state-read-role-tf-module | n/a |
+| vpc\_flow\_logs | trussworks/vpc-flow-logs/aws | >=2.0.0, <2.1.0 |
+
+## Resources ##
+
+| Name | Type |
+|------|------|
+| [aws_acm_certificate.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate) | resource |
+| [aws_acm_certificate_validation.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/acm_certificate_validation) | resource |
+| [aws_default_route_table.public](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_route_table) | resource |
+| [aws_ec2_transit_gateway_route.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route) | resource |
+| [aws_ec2_transit_gateway_route_table_association.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_association) | resource |
+| [aws_ec2_transit_gateway_vpc_attachment.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_vpc_attachment) | resource |
+| [aws_eip.nat_gw_eips](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip) | resource |
+| [aws_iam_policy.provisionnetworking_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_role_policy_attachment.provisionnetworking_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_internet_gateway.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway) | resource |
+| [aws_nat_gateway.nat_gws](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway) | resource |
+| [aws_route.cool_route](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.cool_routes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.external_route](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route.external_routes](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_route53_record.domainmanager_certificate_validation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
+| [aws_route53_vpc_association_authorization.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_vpc_association_authorization) | resource |
+| [aws_route53_zone_association.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone_association) | resource |
+| [aws_route_table.private_route_tables](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table) | resource |
+| [aws_route_table_association.private_route_table_associations](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association) | resource |
+| [aws_vpc.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
+| [null_resource.break_association_with_default_route_table](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_caller_identity.domainmanager](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
+| [aws_iam_policy_document.provisionnetworking_policy_doc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_organizations_organization.cool](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organization) | data source |
+| [terraform_remote_state.dns_cyber_dhs_gov](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.domainmanager](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.master](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.sharedservices](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.sharedservices_networking](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.terraform](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
+| [terraform_remote_state.users](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state) | data source |
 
 ## Inputs ##
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws_region | The AWS region to deploy into (e.g. us-east-1) | `string` | `us-east-1` | no |
-| cool_cidr_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
-| domainmanager_subdomain | The subdomain for Domain Manager (e.g. "domain-manager.cool"). | `string` | n/a | yes |
-| private_subnet_cidr_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as public_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
-| provisionnetworking_policy_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Domain Manager account. | `string` | `Allows provisioning of the networking layer in the Domain Manager account.` | no |
-| provisionnetworking_policy_name | The name to assign the IAM policy that allows provisioning of the networking layer in the Domain Manager account. | `string` | `ProvisionNetworking` | no |
-| public_subnet_cidr_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as private_subnet_cidr_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
-| read_terraform_state_role_name | The name to assign the IAM role and policy that allows read-only access to the cool-domain-manager-networking state in the S3 bucket where Terraform state is stored. | `string` | `ReadDomainManagerNetworkingTerraformState` | no |
-| tags | Tags to apply to all AWS resources created | `map(string)` | `{}` | no |
-| vpc_cidr_block | The CIDR block to use for the Domain Manager VPC (e.g. "10.10.0.0/21"). | `string` | n/a | yes |
+| aws\_region | The AWS region to deploy into (e.g. us-east-1) | `string` | `"us-east-1"` | no |
+| cool\_cidr\_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
+| domainmanager\_subdomain | The subdomain for Domain Manager (e.g. "domain-manager.cool"). | `string` | n/a | yes |
+| private\_subnet\_cidr\_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as public\_subnet\_cidr\_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| provisionnetworking\_policy\_description | The description to associate with the IAM policy that allows provisioning of the networking layer in the Domain Manager account. | `string` | `"Allows provisioning of the networking layer in the Domain Manager account."` | no |
+| provisionnetworking\_policy\_name | The name to assign the IAM policy that allows provisioning of the networking layer in the Domain Manager account. | `string` | `"ProvisionNetworking"` | no |
+| public\_subnet\_cidr\_blocks | The CIDR blocks corresponding to the public subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as private\_subnet\_cidr\_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
+| read\_terraform\_state\_role\_name | The name to assign the IAM role and policy that allows read-only access to the cool-domain-manager-networking state in the S3 bucket where Terraform state is stored. | `string` | `"ReadDomainManagerNetworkingTerraformState"` | no |
+| tags | Tags to apply to all AWS resources created. | `map(string)` | `{}` | no |
+| vpc\_cidr\_block | The CIDR block to use for the Domain Manager VPC (e.g. "10.10.0.0/21"). | `string` | n/a | yes |
 
 ## Outputs ##
 
 | Name | Description |
 |------|-------------|
-| domainmanager_certificate | The ACM certificate for Domain Manager. |
-| private_subnet_nat_gws | The NAT gateways used in the private subnets in the Domain Manager VPC. |
-| private_subnets | The private subnets in the Domain Manager VPC. |
-| public_subnets | The public subnets in the Domain Manager VPC. |
-| read_terraform_state | The IAM policies and role that allow read-only access to the Terraform state for Domain Manager networking. |
+| domainmanager\_certificate | The ACM certificate for Domain Manager. |
+| private\_subnet\_nat\_gws | The NAT gateways used in the private subnets in the Domain Manager VPC. |
+| private\_subnets | The private subnets in the Domain Manager VPC. |
+| public\_subnets | The public subnets in the Domain Manager VPC. |
+| read\_terraform\_state | The IAM policies and role that allow read-only access to the Terraform state for Domain Manager networking. |
 | vpc | The Domain Manager VPC. |
 
 ## Notes ##
