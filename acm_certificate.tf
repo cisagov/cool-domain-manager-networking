@@ -16,12 +16,7 @@ resource "aws_acm_certificate" "domainmanager" {
     create_before_destroy = true
   }
 
-  tags = merge(
-    var.tags,
-    {
-      "app" = "domain-manager"
-    },
-  )
+  tags = { "app" = "domain-manager" }
 }
 
 # ------------------------------------------------------------------------------
