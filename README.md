@@ -138,7 +138,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| aws\_region | The AWS region to deploy into (e.g. us-east-1) | `string` | `"us-east-1"` | no |
+| aws\_region | The AWS region to deploy into (e.g. us-east-1). | `string` | `"us-east-1"` | no |
 | cool\_cidr\_block | The overall CIDR block associated with the COOL (e.g. "10.128.0.0/9"). | `string` | n/a | yes |
 | domainmanager\_subdomain | The subdomain for Domain Manager (e.g. "domain-manager.cool"). | `string` | n/a | yes |
 | private\_subnet\_cidr\_blocks | The CIDR blocks corresponding to the private subnets to be associated with the VPC (e.g. ["10.10.0.0/24", "10.10.1.0/24"]).  This list must be the same length as public\_subnet\_cidr\_blocks, since each private subnet will be assigned a NAT gateway in a public subnet in the same Availability Zone. | `list(string)` | n/a | yes |
