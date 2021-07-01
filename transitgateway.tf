@@ -16,7 +16,6 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "domainmanager" {
   provider = aws.domainmanager_provisionaccount
 
   subnet_ids         = [for s in module.private.subnets : s.id]
-  tags               = var.tags
   transit_gateway_id = local.transit_gateway_id
   vpc_id             = aws_vpc.domainmanager.id
 }
