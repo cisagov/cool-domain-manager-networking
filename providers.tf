@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 # This is the "default" provider that is used assume the roles in the other
 # providers.  It uses the credentials of the caller.  It is also used to
 # assume the roles required to access remote state in the Terraform backend.
@@ -95,3 +97,20 @@ provider "aws" {
   }
   region = var.aws_region
 }
+=======
+>>>>>>> e4172e93d960bc654deefaa28993fb85de17b6aa
+=======
+# This is an example of what a provider looks like.
+#
+# provider "aws" {
+#   alias = "myprovider"
+#   assume_role {
+#     role_arn     = "arn:aws:iam::123456789012:role/MyRole"
+#     session_name = "MySessionName"
+#   }
+#   default_tags {
+#     tags = var.tags
+#   }
+#   region = var.aws_region
+# }
+>>>>>>> 8082d067cf8f2ecc56240dec0c61881788eae034
