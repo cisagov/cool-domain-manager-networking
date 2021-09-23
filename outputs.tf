@@ -1,6 +1,7 @@
 output "domainmanager_certificate" {
   value       = aws_acm_certificate.domainmanager
   description = "The ACM certificate for Domain Manager."
+  sensitive   = true
 }
 
 output "private_subnet_nat_gws" {
