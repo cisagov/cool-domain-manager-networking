@@ -54,7 +54,7 @@
    [`cisagov/cool-accounts-domain-manager`](https://github.com/cisagov/cool-accounts-domain-manager)
    (e.g. `staging`, `production`, etc.) or your deployment will fail.
 1. Create a `<workspace_name>.tfvars` file with all of the required
-   variables (see [Inputs](#Inputs) below for details).
+   variables (see [Inputs](#inputs) below for details).
 1. Run the command `terraform init`.
 1. Add all necessary permissions by running the command:
 
