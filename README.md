@@ -68,22 +68,23 @@
    terraform apply -var-file=<workspace_name>.tfvars
    ```
 
+<!-- BEGIN_TF_DOCS -->
 ## Requirements ##
 
 | Name | Version |
 |------|---------|
 | terraform | ~> 1.0 |
-| aws | ~> 3.38 |
+| aws | ~> 4.9 |
 
 ## Providers ##
 
 | Name | Version |
 |------|---------|
-| aws | ~> 3.38 |
-| aws.dns\_cyber\_dhs\_gov | ~> 3.38 |
-| aws.domainmanager\_provisionaccount | ~> 3.38 |
-| aws.organizationsreadonly | ~> 3.38 |
-| aws.provisionsharedservices | ~> 3.38 |
+| aws | ~> 4.9 |
+| aws.dns\_cyber\_dhs\_gov | ~> 4.9 |
+| aws.domainmanager\_provisionaccount | ~> 4.9 |
+| aws.organizationsreadonly | ~> 4.9 |
+| aws.provisionsharedservices | ~> 4.9 |
 | null | n/a |
 | terraform | n/a |
 
@@ -159,6 +160,7 @@
 | public\_subnets | The public subnets in the Domain Manager VPC. |
 | read\_terraform\_state | The IAM policies and role that allow read-only access to the Terraform state for Domain Manager networking. |
 | vpc | The Domain Manager VPC. |
+<!-- END_TF_DOCS -->
 
 ## Notes ##
 
